@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>爱的告白</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 装饰性爱心 */
+        .bg-heart {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .bg-heart:before, .bg-heart:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .bg-heart:before {
+            top: -50px;
+            left: 0;
+        }
+
+        .bg-heart:after {
+            top: 0;
+            left: -50px;
+        }
+
+        .bg-heart:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .bg-heart:nth-child(2) {
+            top: 70%;
+            left: 20%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 2s;
+        }
+
+        .bg-heart:nth-child(2):before, .bg-heart:nth-child(2):after {
+            width: 60px;
+            height: 60px;
+        }
+
+        .bg-heart:nth-child(2):before {
+            top: -30px;
+        }
+
+        .bg-heart:nth-child(2):after {
+            left: -30px;
+        }
+
+        .bg-heart:nth-child(3) {
+            top: 30%;
+            right: 15%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 4s;
+        }
+
+        .bg-heart:nth-child(3):before, .bg-heart:nth-child(3):after {
+            width: 80px;
+            height: 80px;
+        }
+
+        .bg-heart:nth-child(3):before {
+            top: -40px;
+        }
+
+        .bg-heart:nth-child(3):after {
+            left: -40px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: rotate(45deg) translateY(0);
+            }
+            50% {
+                transform: rotate(45deg) translateY(-20px);
+            }
+        }
+
+        /* 容器样式 */
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .message {
+            font-size: 18px;
+            color: #333;
+            margin: 25px 0;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        #btn-yes {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        #btn-no {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+
+        #start-btn {
+            background-color: #e91e63;
+            color: white;
+            padding: 15px 40px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .result {
+            display: none;
+            font-size: 22px;
+            color: #e91e63;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .heart {
+            width: 100px;
+            height: 100px;
+            background-color: #e91e63;
+            transform: rotate(45deg);
+            margin: 20px auto;
+            display: none;
+            animation: pulse 1.5s infinite;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #e91e63;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -50px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: -50px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: rotate(45deg) scale(1);
+            }
+            50% {
+                transform: rotate(45deg) scale(1.1);
+            }
+            100% {
+                transform: rotate(45deg) scale(1);
+            }
+        }
+
+        /* 适配手机屏幕比例 */
+        @media (max-width: 480px) {
+            .container {
+                height: 70vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            button {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景爱心装饰 -->
+    <div class="bg-heart"></div>
+    <div class="bg-heart"></div>
+    <div class="bg-heart"></div>
+
+    <div class="container">
+        <h1>一份特别的告白</h1>
+        <button id="start-btn">开始</button>
+        
+        <div class="message">
+            郑玉兰我喜欢你，<br>
+            你可以做我女朋友吗？
+        </div>
+        
+        <div class="buttons">
+            <button id="btn-yes">A 可以</button>
+            <button id="btn-no">B 不要</button>
+        </div>
+        
+        <div class="result" id="success-msg">我们在一起啦！</div>
+        <div class="heart"></div>
+    </div>
+
+    <script>
+        // 获取DOM元素
+        const startBtn = document.getElementById('start-btn');
+        const message = document.querySelector('.message');
+        const buttons = document.querySelector('.buttons');
+        const btnYes = document.getElementById('btn-yes');
+        const btnNo = document.getElementById('btn-no');
+        const successMsg = document.getElementById('success-msg');
+        const heart = document.querySelector('.heart');
+        
+        let noClickCount = 0;
+        let isNoMoving = false;
+
+        // 开始按钮点击事件
+        startBtn.addEventListener('click', () => {
+            startBtn.style.display = 'none';
+            message.style.display = 'block';
+            buttons.style.display = 'flex';
+        });
+
+        // 可以按钮点击事件
+        btnYes.addEventListener('click', () => {
+            message.style.display = 'none';
+            buttons.style.display = 'none';
+            successMsg.style.display = 'block';
+            heart.style.display = 'block';
+            
+            // 创建更多爱心
+            createFallingHearts();
+        });
+
+        // 不要按钮点击事件
+        btnNo.addEventListener('click', () => {
+            noClickCount++;
+            
+            // 调整按钮大小
+            btnYes.style.transform = `scale(${1 + noClickCount * 0.1})`;
+            btnNo.style.transform = `scale(${1 - noClickCount * 0.15})`;
+            
+            // 5次后隐藏不要按钮
+            if (noClickCount >= 5) {
+                btnNo.style.display = 'none';
+                btnYes.style.transform = 'scale(1.8)';
+                btnYes.style.padding = '18px 35px';
+                btnYes.style.fontSize = '18px';
+            }
+        });
+
+        // 不要按钮鼠标悬停时轻微移动（增加趣味性）
+        btnNo.addEventListener('mouseover', () => {
+            if (noClickCount > 2 && !isNoMoving) {
+                isNoMoving = true;
+                const randomX = Math.random() * 40 - 20; // -20到20之间的随机值
+                const randomY = Math.random() * 40 - 20;
+                btnNo.style.transform = `translate(${randomX}px, ${randomY}px) scale(${1 - noClickCount * 0.15})`;
+                
+                setTimeout(() => {
+                    isNoMoving = false;
+                }, 300);
+            }
+        });
+
+        // 创建下落的爱心
+        function createFallingHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'bg-heart';
+                heart.style.position = 'absolute';
+                heart.style.top = `-${Math.random() * 100 + 50}px`;
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.width = `${Math.random() * 40 + 20}px`;
+                heart.style.height = `${Math.random() * 40 + 20}px`;
+                heart.style.opacity = Math.random() * 0.7 + 0.3;
+                
+                // 设置动画
+                heart.style.animation = `falling ${Math.random() * 3 + 2}s linear forwards`;
+                
+                document.body.appendChild(heart);
+                
+                // 移除元素
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }
+        }
+
+        // 添加下落动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes falling {
+                0% {
+                    transform: rotate(45deg) translateY(0);
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: rotate(45deg) translateY(100vh);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
